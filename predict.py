@@ -56,7 +56,7 @@ class Predictor(BasePredictor):
         ),
         correction_strength: float = Input(
             description="Strength of pitch correction (0.0 to 1.0). Higher values = stronger correction.",
-            default=0.7, ge=0.0, le=1.0,
+            default=1.0, ge=0.0, le=1.0,
         ),
         adaptive_strength: bool = Input(
             description="Adapt correction strength based on voice confidence.",
