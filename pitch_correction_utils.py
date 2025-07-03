@@ -70,10 +70,15 @@ def closest_pitch_from_scale(f0, scale, correction_strength=1.0):
 
 def aclosest_pitch_from_scale(f0, scale, correction_strength=1.0):
     """Map each pitch in the f0 array to the closest pitch belonging to the given scale."""
+    # Handle scalar or empty f0
+    if not hasattr(f0, 'shape') or len(f0.shape) == 0 or f0.shape == () or np.isscalar(f0):
+        return closest_pitch_from_scale(f0, scale, correction_strength)
     sanitized_pitch = np.zeros_like(f0)
     for i in np.arange(f0.shape[0]):
         sanitized_pitch[i] = closest_pitch_from_scale(f0[i], scale, correction_strength)
+    # Perform median filtering to additionally smooth the corrected pitch.
     smoothed_sanitized_pitch = sig.medfilt(sanitized_pitch, kernel_size=11)
+    # Remove the additional NaN values after median filtering.
     smoothed_sanitized_pitch[np.isnan(smoothed_sanitized_pitch)] = \
         sanitized_pitch[np.isnan(smoothed_sanitized_pitch)]
     return smoothed_sanitized_pitch

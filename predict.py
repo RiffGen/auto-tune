@@ -47,8 +47,6 @@ class Predictor(BasePredictor):
         correction_strength: float = Input(
             description="Strength of pitch correction (0.0 to 1.0). Defaults to the style preset, but you can override.",
             default=0.8,
-            min=0.0,
-            max=1.0,
         ),
         adaptive_strength: bool = Input(
             description="Whether to adapt correction strength based on voice confidence. Defaults to the style preset, but you can override.",
@@ -127,6 +125,11 @@ if __name__ == "__main__":
     out = p.predict(
         audio_file="https://storage.googleapis.com/riffgen/audio/f9398d3d-1d48-48d2-adc2-2c28b8caabf8.m4a",
         autotune_style="balanced",
+        scale="closest",
+        correction_strength=0.8,
+        adaptive_strength=True,
+        smooth_transitions=True,
+        plot=False,
         output_format="mp3",
     )
     print("Output file:", out)
