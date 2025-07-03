@@ -130,7 +130,8 @@ if __name__ == "__main__":
     out = p.predict(
         # audio_file="https://storage.googleapis.com/riffgen/audio/f9398d3d-1d48-48d2-adc2-2c28b8caabf8.m4a",
         # audio_file="https://storage.googleapis.com/riffgen/audio/a12debeb-f3c8-454b-88cd-d87889e51ddd.m4a",
-        audio_file="https://storage.googleapis.com/riffgen/audio/33e1f7fd-3a65-4e8c-a650-013f05b2ae07.m4a",
+        # audio_file="https://storage.googleapis.com/riffgen/audio/33e1f7fd-3a65-4e8c-a650-013f05b2ae07.m4a",
+        audio_file="https://storage.googleapis.com/riffgen/audio/afa7b4e7-ecd5-40fc-8b97-909b72469c45.m4a", # summer
         scale="auto",
         correction_strength=1,
         adaptive_strength=True,
