@@ -11,6 +11,8 @@ build:
     - "ffmpeg"
     - "libavcodec-extra"
     - "libavformat-extra"
+    # rubberband for audio resynthesis
+    - "rubberband-cli"
   #   - "libgl1-mesa-glx"
   #   - "libglib2.0-0"
 
@@ -22,11 +24,14 @@ build:
     - "numpy==1.26.4"
     - "psola==0.0.1"
     - "scipy==1.13.0"
-    - "librosa==0.10.1"
+    - "librosa==0.11.0"
     - "matplotlib==3.8.4"
-    - "soundfile==0.12.1"
+    - "soundfile==0.13.1"
     - "pandas==2.1.4"
     - "requests==2.31.0"
+    - "noisereduce==3.0.3"
+    - "crepe==0.0.16"
+    - "tensorflow==2.19.0"
 
   # commands run after the environment is setup
   # run:
