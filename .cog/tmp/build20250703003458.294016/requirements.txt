@@ -1,0 +1,8 @@
+numpy==1.26.4
+psola==0.0.1
+scipy==1.13.0
+librosa==0.10.1
+matplotlib==3.8.4
+soundfile==0.12.1
+pandas==2.1.4
+requests==2.31.0

@@ -7,6 +7,7 @@ import requests
 import librosa
 import numpy as np
 from cog import BasePredictor, Input, Path
+from typing import List
 
 # Make sure your corrected utils file is named 'utils.py'
 from utils import main
@@ -67,14 +68,14 @@ class Predictor(BasePredictor):
         ),
         plot: bool = Input(
             description="Generate a pitch correction visualization plot.",
-            default=False,
+            default=True,
         ),
         output_format: str = Input(
             description="Output format for generated audio.",
             default="wav",
             choices=["wav", "mp3"],
         ),
-    ) -> Path:
+    ) -> List[Path]:
         """Run a single prediction on the model"""
         filepath = self.get_local_path(audio_file)
 
@@ -122,12 +123,18 @@ class Predictor(BasePredictor):
                 os.remove(output_path_str)
             os.rename(str(output_wav), output_path_str)
 
-        return Path(output_path_str)
+        # Return list of output files
+        output_files = [Path(output_path_str)]
+        
+        if plot and os.path.exists("pitch_correction.png"):
+            output_files.append(Path("pitch_correction.png"))
+        
+        return output_files
 
 if __name__ == "__main__":
     p = Predictor()
     p.setup()
-    out = p.predict(
+    outputs = p.predict(
         # audio_file="https://storage.googleapis.com/riffgen/audio/f9398d3d-1d48-48d2-adc2-2c28b8caabf8.m4a",
         # audio_file="https://storage.googleapis.com/riffgen/audio/a12debeb-f3c8-454b-88cd-d87889e51ddd.m4a",
         # audio_file="https://storage.googleapis.com/riffgen/audio/33e1f7fd-3a65-4e8c-a650-013f05b2ae07.m4a",
@@ -139,4 +146,4 @@ if __name__ == "__main__":
         plot=True,
         output_format="wav",
     )
-    print("Output file:", out)
+    print("Output files:", outputs)
