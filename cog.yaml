@@ -1,0 +1,110 @@
+# Configuration for Cog ⚙️
+# Reference: https://github.com/replicate/cog/blob/main/docs/yaml.md
+
+build:
+  # set to true if your model requires a GPU
+  gpu: false
+
+  # a list of ubuntu apt packages to install
+  system_packages:
+    # all ffmpeg packages
+    - "ffmpeg"
+    - "libavcodec-extra"
+    - "libavformat-extra"
+  #   - "libgl1-mesa-glx"
+  #   - "libglib2.0-0"
+
+  # python version in the form '3.11' or '3.11.4'
+  python_version: "3.11"
+
+  # a list of packages in the format <package-name>==<version>
+  python_packages:
+    - "numpy==1.26.4"
+    - "psola==0.0.1"
+    - "scipy==1.13.0"
+    - "librosa==0.10.1"
+    - "matplotlib==3.8.4"
+    - "soundfile==0.12.1"
+
+  # commands run after the environment is setup
+  # run:
+  #   - "echo env is ready!"
+  #   - "echo another command if needed"
+
+# predict.py defines how predictions are run on your model
+predict: "predict.py:Predictor"
+
+# Input parameters for the model
+input:
+  # Audio file input
+  audio_file:
+    type: string
+    description: "URL or path to the audio file to be pitch-corrected"
+
+  # Style/Intensity preset
+  autotune_style:
+    type: string
+    description: |
+      Auto-tune style/intensity preset. Changing this will update the defaults for correction strength, adaptive, and smoothing, but you can override them below.
+    default: "balanced"
+    choices:
+      - "ultra_subtle"
+      - "natural"
+      - "gentle"
+      - "balanced"
+      - "strong"
+      - "classic"
+
+  # Scale/key dropdown
+  scale:
+    type: string
+    description: "Musical key/scale to use for pitch correction. If set to 'closest', will use chromatic correction."
+    default: "closest"
+    choices:
+      - "closest"
+      - "A:maj"
+      - "A:min"
+      - "Bb:maj"
+      - "Bb:min"
+      - "B:maj"
+      - "B:min"
+      - "C:maj"
+      - "C:min"
+      - "Db:maj"
+      - "Db:min"
+      - "D:maj"
+      - "D:min"
+      - "Eb:maj"
+      - "Eb:min"
+      - "E:maj"
+      - "E:min"
+      - "F:maj"
+      - "F:min"
+      - "Gb:maj"
+      - "Gb:min"
+      - "G:maj"
+      - "G:min"
+      - "Ab:maj"
+      - "Ab:min"
+
+  correction_strength:
+    type: float
+    description: "Strength of pitch correction (0.0 to 1.0). Defaults to the style preset, but you can override."
+    default: 0.8
+    min: 0.0
+    max: 1.0
+
+  adaptive_strength:
+    type: bool
+    description: "Whether to adapt correction strength based on voice confidence. Defaults to the style preset, but you can override."
+    default: true
+
+  smooth_transitions:
+    type: bool
+    description: "Whether to smooth transitions between voiced/unvoiced segments. Defaults to the style preset, but you can override."
+    default: true
+
+  plot:
+    type: bool
+    description: "Whether to generate a pitch correction visualization plot"
+    default: false
